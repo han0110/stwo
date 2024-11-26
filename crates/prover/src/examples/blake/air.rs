@@ -2,7 +2,7 @@ use std::simd::u32x16;
 
 use itertools::{chain, multiunzip, Itertools};
 use num_traits::Zero;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use tracing::{span, Level};
 
 use super::round::{blake_round_info, BlakeRoundComponent, BlakeRoundEval};
@@ -49,7 +49,7 @@ const PREPROCESSED_XOR_COLUMNS: [PreprocessedColumn; 20] = [
     PreprocessedColumn::IsFirst(xor4::column_bits::<4, 0>()),
 ];
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct BlakeStatement0 {
     log_size: u32,
 }
@@ -117,6 +117,7 @@ impl AllElements {
     }
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct BlakeStatement1 {
     scheduler_claimed_sum: SecureField,
     round_claimed_sums: Vec<SecureField>,
@@ -145,6 +146,7 @@ impl BlakeStatement1 {
     }
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct BlakeProof<H: MerkleHasher> {
     stmt0: BlakeStatement0,
     stmt1: BlakeStatement1,
