@@ -2,7 +2,7 @@ use std::simd::u32x16;
 
 use itertools::{chain, multiunzip, Itertools};
 use num_traits::Zero;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use stwo::core::air::Component;
 use stwo::core::channel::{Channel, MerkleChannel};
 use stwo::core::fields::qm31::SecureField;
@@ -68,7 +68,7 @@ const fn preprocessed_xor_columns_log_sizes() -> [u32; 15] {
     ]
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct BlakeStatement0 {
     log_size: u32,
 }
@@ -121,6 +121,7 @@ impl AllElements {
     }
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct BlakeStatement1 {
     scheduler_claimed_sum: SecureField,
     round_claimed_sums: Vec<SecureField>,
@@ -149,6 +150,7 @@ impl BlakeStatement1 {
     }
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct BlakeProof<H: MerkleHasher> {
     stmt0: BlakeStatement0,
     stmt1: BlakeStatement1,
